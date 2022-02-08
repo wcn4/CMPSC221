@@ -1,24 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package programmingassignment2;
 
-/**
- *
- * @author Yoshi
- */
+//The Loan Account
 public class LoanAccount {
     //Set the data to be private for data encapsulation purposes
     
-    //These static variables will be shared across all classes
-    //Will default to zero
-    private double annualInterestRate = 0;
-    private int months = 0;
+    //The annual interest rate of the loan
+    private double annualInterestRate;
+    
+    //The number of months the loan is paid over
+    private int months;
     
     //The starting amount of money put into the loan
     private final double principle;
     
+    //Creates a loan account using the principle ammount, annual interest rate
+    //And the number of months the loan is paid over
     public LoanAccount(double principle, double annualInterestRate, int months){
         this.principle = principle;     
         this.annualInterestRate = annualInterestRate;
@@ -26,7 +23,7 @@ public class LoanAccount {
     }
     
     
-    //Given a number of total payments, calculates and returns the 
+    //Using the number of months on the loan, calculates and returns the 
     //amount of money needed per month to pay off the loan within the 
     //number of payments given.
     public double calculateMonthlyPayment(){
@@ -36,7 +33,7 @@ public class LoanAccount {
         return monthlyPayment;
     }
     
-    
+    //Getter function for Annual interest rate
     public double getAnnualInterestRate(){
         return annualInterestRate;
     }
@@ -54,16 +51,19 @@ public class LoanAccount {
         return principle;
     }
     
+    //Getter function for the number of months the loan is paid over
     public int getMonths(){
         return this.months;
     }
     
     @Override
     public String toString(){
-        String message = String.format("Principle: $%.2f%n", this.getPrinciple());
-        message = String.format("%sAnnual Interest Rate: %.2f%%%n", message, this.getAnnualInterestRate());
-        message = String.format("%sTerm of Loan in Months: %d%n", message, this.getMonths());
-        message = String.format("%sMonthly Payment: $%.2f%n", message, this.calculateMonthlyPayment());
+        String message = String.format("Principle: $%.2f%n"
+                + "Annual Interest Rate: %.2f%%%n"
+                + "Term of Loan in Months: %d%n"
+                + "Monthly Payment: $%.2f%n", 
+                this.getPrinciple(), this.getAnnualInterestRate(), 
+                this.getMonths(), this.calculateMonthlyPayment());
         return message;
     }
     

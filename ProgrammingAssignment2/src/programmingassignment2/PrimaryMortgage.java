@@ -10,8 +10,14 @@ package programmingassignment2;
  */
 public class PrimaryMortgage extends LoanAccount {
     
+    //Primary Mortgage address does not change
     private final Address address;
-    private double PMIMonthlyAmount;
+    
+    //Assuming PMIMonthlyAmount is fixed for now, can be changed later
+    private final double PMIMonthlyAmount;
+    
+    //Creates a Primary Mortgage by creating a LoanAccount and then defines properties
+    // PMIMonthlyAmount and the address of the primary Mortgage
     public PrimaryMortgage(double principle, double annualInterestRate, int months, 
             double PMIMonthlyAmount, Address address){
         super(principle, annualInterestRate, months);
@@ -20,10 +26,12 @@ public class PrimaryMortgage extends LoanAccount {
         
     }
     
+    //Getter function for the PMIMonthlyAmount
     public double getPMIMonthlyAmount(){
         return PMIMonthlyAmount;
     }
     
+    //Getter function for property Address
     public Address getAddress(){
         
         return address;

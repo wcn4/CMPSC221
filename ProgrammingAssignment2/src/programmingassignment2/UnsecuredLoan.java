@@ -9,6 +9,8 @@ package programmingassignment2;
  * @author Yoshi
  */
 public class UnsecuredLoan extends LoanAccount{
+    
+    //Creates an Unsecured Loan by creating a Loan Account
     public UnsecuredLoan(double principle, double annualInterestRate, int months){
         super(principle, annualInterestRate, months);
     }

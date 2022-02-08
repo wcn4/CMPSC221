@@ -10,16 +10,20 @@ package programmingassignment2;
  */
 public class CarLoan extends LoanAccount{
     
+    //vehicleVIN is final 
     private final String vehicleVIN;
     
+    //Create a CarLoan by creating a loan account and initializing vehicleVIN
     public CarLoan(double principle, double annualInterestRate, int months, String vehicleVIN){
         super(principle, annualInterestRate, months);
         this.vehicleVIN = vehicleVIN;
     }
     
+    //Getter function for Vehicle VIN
     public String getVehicleVIN(){
         return vehicleVIN;
     }
+    
     
     @Override
     public String toString(){

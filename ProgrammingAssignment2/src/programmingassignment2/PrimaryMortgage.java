@@ -13,11 +13,28 @@ public class PrimaryMortgage extends LoanAccount {
     private final Address address;
     private double PMIMonthlyAmount;
     public PrimaryMortgage(double principle, double annualInterestRate, int months, 
-            Address address, double PMIMonthlyAmount){
+            double PMIMonthlyAmount, Address address){
         super(principle, annualInterestRate, months);
         this.address = address;
         this.PMIMonthlyAmount = PMIMonthlyAmount;
         
+    }
+    
+    public double getPMIMonthlyAmount(){
+        return PMIMonthlyAmount;
+    }
+    
+    public Address getAddress(){
+        
+        return address;
+    }
+    
+    
+    @Override
+    public String toString(){
+        return String.format("Primary Mortgage Loan with:%n"
+                + "%sPMI Monthly Amount: $%.2f%n%s%n", 
+                super.toString(), this.getPMIMonthlyAmount(), this.getAddress().toString());
     }
     
 }

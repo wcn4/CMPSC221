@@ -17,4 +17,15 @@ public class CarLoan extends LoanAccount{
         this.vehicleVIN = vehicleVIN;
     }
     
+    public String getVehicleVIN(){
+        return vehicleVIN;
+    }
+    
+    @Override
+    public String toString(){
+        String message = super.toString();
+        message = String.format("Car Loan with:%n%sVehicle VIN: %s%n%n", message, this.getVehicleVIN());
+        return message;
+    }
+    
 }

@@ -12,12 +12,35 @@ public class Address {
     private final String street;
     private final String city;
     private final String state;
-    private final int zipcode;
+    private final String zipcode;
     
-    public Address(String street, String city, String state, int zipcode){
+    public Address(String street, String city, String state, String zipcode){
         this.street = street;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
+    }
+    
+    public String getStreet(){
+        return street;
+    }
+    
+    public String getCity(){
+        return city;
+    }
+    
+    public String getState(){
+        return state;
+    }
+    
+    public String getZipCode(){
+        return zipcode;
+    }
+    
+    @Override
+    public String toString(){
+        return String.format("Property Address:%n"
+                + "\t%s %n"
+                + "\t%s, %s %s%n", this.getStreet(), this.getCity(), this.getState(), this.getZipCode());
     }
 }

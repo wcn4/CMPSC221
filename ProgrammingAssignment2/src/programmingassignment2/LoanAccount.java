@@ -29,11 +29,16 @@ public class LoanAccount {
     //Given a number of total payments, calculates and returns the 
     //amount of money needed per month to pay off the loan within the 
     //number of payments given.
-    public double calculateMonthlyPayment(int numberOfPayments){
+    public double calculateMonthlyPayment(){
         
         double monthlyInterest = annualInterestRate/(12 * 100);
-        double monthlyPayment = principle * (monthlyInterest / (1- Math.pow(1 + monthlyInterest, -numberOfPayments)));
+        double monthlyPayment = principle * (monthlyInterest / (1- Math.pow(1 + monthlyInterest, -months)));
         return monthlyPayment;
+    }
+    
+    
+    public double getAnnualInterestRate(){
+        return annualInterestRate;
     }
     
     //Updates annualInterest Rates for all instances of LoanAccount
@@ -42,8 +47,25 @@ public class LoanAccount {
         this.annualInterestRate = annualInterestRate;
     }
     
+    
+    
     //Getter function for principle
     public double getPrinciple(){
         return principle;
     }
+    
+    public int getMonths(){
+        return this.months;
+    }
+    
+    @Override
+    public String toString(){
+        String message = String.format("Principle: $%.2f%n", this.getPrinciple());
+        message = String.format("%sAnnual Interest Rate: %.2f%%%n", message, this.getAnnualInterestRate());
+        message = String.format("%sTerm of Loan in Months: %d%n", message, this.getMonths());
+        message = String.format("%sMonthly Payment: $%.2f%n", message, this.calculateMonthlyPayment());
+        return message;
+    }
+    
+    
 }

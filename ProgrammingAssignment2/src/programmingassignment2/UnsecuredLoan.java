@@ -13,5 +13,8 @@ public class UnsecuredLoan extends LoanAccount{
         super(principle, annualInterestRate, months);
     }
     
-    
+    @Override
+    public String toString(){
+        return String.format("Unsecured Loan with:%n%s", super.toString());
+    }
 }

@@ -8,13 +8,10 @@ package programmingassignment2;
  *
  * @author Yoshi
  */
-public class CarLoan extends LoanAccount{
-    
-    private final String vehicleVIN;
-    
-    public CarLoan(double principle, double annualInterestRate, int months, String vehicleVIN){
+public class UnsecuredLoan extends LoanAccount{
+    public UnsecuredLoan(double principle, double annualInterestRate, int months){
         super(principle, annualInterestRate, months);
-        this.vehicleVIN = vehicleVIN;
     }
+    
     
 }

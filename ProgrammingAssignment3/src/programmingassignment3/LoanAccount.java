@@ -58,7 +58,7 @@ public class LoanAccount {
     
     @Override
     public String toString(){
-        String message = String.format("Principle: $%.2f%n"
+        String message = String.format("Principal: $%.2f%n"
                 + "Annual Interest Rate: %.2f%%%n"
                 + "Term of Loan in Months: %d%n"
                 + "Monthly Payment: $%.2f%n", 

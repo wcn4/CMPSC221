@@ -37,14 +37,26 @@ import javax.swing.JTextField;
  */
 public class DrawingApplicationFrame extends JFrame
 {
-
+    private final BorderLayout mainLayout;
+    
     // Create the panels for the top of the application. One panel for each
     // line and one to contain both of those panels.
+    
+    private final JPanel topPanel;
 
+    private final JPanel drawPanel;
+    private final JPanel statusLabel;
+    
     // create the widgets for the firstLine Panel.
-
+    private final JPanel shapesPanel;
+    private final JLabel firstLineText;
+    private final JComboBox shapeSelection;
+    private final JButton firstColor;
+    private final JButton secondColor;
+    private final JButton undo;
+    private final JButton clear;
     //create the widgets for the secondLine Panel.
-
+    private final JPanel optionsPanel;
     // Variables for drawPanel.
 
     // add status label
@@ -52,7 +64,52 @@ public class DrawingApplicationFrame extends JFrame
     // Constructor for DrawingApplicationFrame
     public DrawingApplicationFrame()
     {
+        super("Java 2D Drawings");
+        
+        mainLayout = new BorderLayout();
+        setLayout(mainLayout);
+        
+        topPanel = new JPanel();
+        topPanel.setLayout(new GridLayout(2, 1));
+        
         // add widgets to panels
+        shapesPanel = new JPanel();
+        shapesPanel.setLayout(new FlowLayout());
+        firstLineText = new JLabel("Shape:");
+        String[] shapes = {"Line", "Rectangle", "Oval"};
+        shapeSelection = new JComboBox(shapes);
+        firstColor = new JButton("1st Color...");
+        secondColor = new JButton("2nd Color...");
+        undo = new JButton("Undo");
+        clear = new JButton("Clear");
+        
+        shapesPanel.add(firstLineText);
+        shapesPanel.add(shapeSelection);
+        shapesPanel.add(firstColor);
+        shapesPanel.add(secondColor);
+        shapesPanel.add(undo);
+        shapesPanel.add(clear);
+        
+        topPanel.add(shapesPanel);
+        
+        optionsPanel = new JPanel();
+        
+        topPanel.add(optionsPanel);
+        
+        
+        drawPanel = new JPanel();
+        
+        statusLabel = new JPanel();
+        
+        
+        add(topPanel, BorderLayout.NORTH);
+        add(drawPanel, BorderLayout.CENTER);
+        add(statusLabel, BorderLayout.SOUTH);
+        
+        
+        
+        
+        
         
         // firstLine widgets
 
@@ -61,7 +118,7 @@ public class DrawingApplicationFrame extends JFrame
         // add top panel of two panels
 
         // add topPanel to North, drawPanel to Center, and statusLabel to South
-        
+            //Use a border layout for this
         //add listeners and event handlers
     }
 

@@ -22,17 +22,88 @@ public class CourseQueries {
     private static PreparedStatement getAllCourseCodes;
     private static PreparedStatement getCourseSeats;
     private static PreparedStatement dropCourse;
+    private static ResultSet resultSet;
     
     public static void addCourse(CourseEntry course){
         connection = DBConnection.getConnection();
         try
         {
-            addCourse = connection.prepareStatement("insert into app"); //Look at SQL code 
+            addCourse = connection.prepareStatement("INSERT INTO app.courses"
+                    + " (SEMESTER, COURSECODE, DESCRIPTION, SEATS) VALUES (?, ?, ?, ?)"); //Look at SQL code
+            addCourse.setString(1, course.getSemester());
+            addCourse.setString(2, course.getCourseCode());
+            addCourse.setString(3, course.getDescription());
+            addCourse.setInt(4, course.getSeats());
+            addCourse.executeUpdate();
             
         }
         catch(SQLException e){
+            e.printStackTrace();
             
         }
     }
+    
+    public static ArrayList<CourseEntry> getAllCourses(String semester){
+        connection = DBConnection.getConnection();
+        ArrayList<CourseEntry> courses = new ArrayList<CourseEntry>();
+        resultSet = null;
+        try
+        {
+            getAllCourses = connection.prepareStatement("SELECT * FROM APP.COURSES "
+                    + "WHERE SEMESTER=? ORDER BY SEATS");
+            getAllCourses.setString(1, semester);
+            resultSet = getAllCourses.executeQuery();
+            while(resultSet.next()){
+                courses.add(new CourseEntry(resultSet.getString(1),
+                        resultSet.getString(2), 
+                        resultSet.getString(3),
+                        resultSet.getInt(4)));
+            }
+            
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return courses;   
+    }
+    
+    public static ArrayList<String> getAllCourseCodes(String semester){
+        connection = DBConnection.getConnection();
+        ArrayList<String> courseCodes = new ArrayList<String>();
+        resultSet = null;
+        try{
+            getAllCourseCodes = connection.prepareStatement("SELECT * FROM APP.COURSES"
+            + "WHERE SEMESTER=? ORDER by COURSECODE");
+            getAllCourseCodes.setString(1, semester);
+            resultSet = getAllCourseCodes.executeQuery();
+            while(resultSet.next()){
+                courseCodes.add(resultSet.getString(1));
+            }
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return courseCodes;
+    }
+    
+    public static int getCourseSeats(String semester, String courseCode){
+        connection = DBConnection.getConnection();
+        resultSet = null;
+        try{
+            getCourseSeats = connection.prepareStatement("SELECT * FROM APP.COURSES"
+                    + "WHERE SEMESTER=? AND COURSECODE=?" );
+            getCourseSeats.setString(1, semester);
+            getCourseSeats.setString(2, courseCode);
+            resultSet = getCourseSeats.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(4);
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    
     
 }

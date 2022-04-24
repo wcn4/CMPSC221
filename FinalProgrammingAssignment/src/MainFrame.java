@@ -665,6 +665,11 @@ public class MainFrame extends javax.swing.JFrame {
         if (!ScheduleQueries.checkIfEntryExists(currentSemester, courseCode, selectedStudent.getStudentID())){
             ScheduleQueries.addScheduleEntry(schedule);
             message = (status == "S") ? (selectedStudent + " has been scheduled for " + courseCode) : (selectedStudent + " has been waitlisted for " + courseCode);
+            rebuildScheduleCourseComboBoxes();
+            rebuildDisplayScheduleComboBoxes();
+            updateDisplayCourses();
+            updateDisplaySchedule();
+            
         }
         else{
             message = selectedStudent + " has already requested to join " + courseCode;

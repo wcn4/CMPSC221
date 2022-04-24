@@ -23,7 +23,9 @@ public class ScheduleQueries {
     private static PreparedStatement addScheduleEntry;
     private static PreparedStatement getScheduleByStudent;
     private static PreparedStatement getScheduledStudentCount;
+    private static PreparedStatement checkIfEntryExists;
     
+    //Adds a semester entry into the database
     public static void addScheduleEntry(ScheduleEntry entry){
         connection = DBConnection.getConnection();
         try{
@@ -33,29 +35,31 @@ public class ScheduleQueries {
             addScheduleEntry.setString(2, entry.getStudentID());
             addScheduleEntry.setString(3, entry.getCourseCode());
             addScheduleEntry.setString(4, entry.getStatus());
-            addScheduleEntry.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            addScheduleEntry.setTimestamp(5, entry.getTimeStamp());
+            addScheduleEntry.executeUpdate();
         }
         catch(SQLException e){
             e.printStackTrace();
         }
     }
     
+    //Grabs all the schedule entries for a given student in for a given semester
     public static ArrayList<ScheduleEntry> getScheduleByStudent(String semester, String studentID){
         connection = DBConnection.getConnection();
         ArrayList<ScheduleEntry> schedules = new ArrayList<ScheduleEntry>();
         resultSet = null;
         try{
-            getScheduleByStudent = connection.prepareStatement("SELECT * FROM APP.SCHEDULE"
+            getScheduleByStudent = connection.prepareStatement("SELECT * FROM APP.SCHEDULE "
                     + "WHERE SEMESTER=? AND STUDENTID=?");
             getScheduleByStudent.setString(1, semester);
             getScheduleByStudent.setString(2, studentID);
             resultSet = getScheduleByStudent.executeQuery();
+            //Adds schedule Entries for each row of data into the arraylist
             while(resultSet.next()){
-                //Probably not the right order as of now so will need to be fixed later
-                schedules.add(new ScheduleEntry(resultSet.getString(1),
-                                            resultSet.getString(2),
-                                            resultSet.getString(3),
-                                            resultSet.getString(4),
+                schedules.add(new ScheduleEntry(resultSet.getString("SEMESTER"),
+                                            resultSet.getString("COURSECODE"),
+                                            resultSet.getString("STUDENTID"),
+                                            resultSet.getString("STATUS"),
                                             resultSet.getTimestamp(5)));
             }
         }
@@ -65,23 +69,47 @@ public class ScheduleQueries {
         return schedules;
     }
     
+    //Get the amount of students scheduled in a given course in a semester
     public static int getScheduledStudentCount(String semester, String courseCode){
         connection = DBConnection.getConnection();
         int students = 0;
         resultSet = null;
         resultSetMetaData = null;
         try{
-            getScheduledStudentCount = connection.prepareStatement("SELECT * FROM APP.SEMESTER"
-                    + "WHERE SEMESTER=? AND COURSECODE=?");
+            getScheduledStudentCount = connection.prepareStatement("SELECT count(studentID) FROM app.schedule WHERE semester = ? AND courseCode = ?");
             getScheduledStudentCount.setString(1, semester);
             getScheduledStudentCount.setString(2, courseCode);
             resultSet = getScheduledStudentCount.executeQuery();
-            resultSetMetaData = resultSet.getMetaData();
-            students = resultSetMetaData.getColumnCount();
+            resultSet.next();
+            students = resultSet.getInt(1);
         }
         catch(SQLException e){
             e.printStackTrace();
         }
         return students;
     } 
+    
+    //checks if an entry exists
+    public static boolean checkIfEntryExists(String semester, String courseCode, String studentID){
+        connection = DBConnection.getConnection();
+        int students = 0;
+        resultSet = null;
+        resultSetMetaData = null;
+        try{
+            checkIfEntryExists = connection.prepareStatement("SELECT count(*) FROM app.schedule WHERE (semester = ? AND courseCode = ? AND studentID = ?)");
+            checkIfEntryExists.setString(1, semester);
+            checkIfEntryExists.setString(2, courseCode);
+            checkIfEntryExists.setString(3, studentID);
+            resultSet = checkIfEntryExists.executeQuery();
+            resultSet.next();
+            
+            //If count is 1, then there must be at least 1 course
+            //Only if it is 1 since cannot have duplicate keys
+            return (resultSet.getInt(1) == 1);
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

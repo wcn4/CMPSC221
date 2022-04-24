@@ -32,4 +32,9 @@ public class StudentEntry {
     public String getLastName() {
         return lastName;
     }
+    
+    @Override
+    public String toString(){
+        return String.format("%s,%s", lastName, firstName);
+    }
 }

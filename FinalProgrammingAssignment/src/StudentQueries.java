@@ -21,7 +21,7 @@ public class StudentQueries {
     private static PreparedStatement addStudent;
     private static PreparedStatement getAllStudents;
     
-    
+    //Adds a student into the database
     public static void addStudent(StudentEntry student){
         connection = DBConnection.getConnection();
         try{
@@ -37,6 +37,7 @@ public class StudentQueries {
         }
     }
     
+    //Grabs all students from the database
     public static ArrayList<StudentEntry> getAllStudents(){
         connection = DBConnection.getConnection();
         ArrayList<StudentEntry> students = new ArrayList<StudentEntry>();

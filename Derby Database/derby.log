@@ -1,7 +1,7 @@
-Sat Apr 23 21:01:33 EDT 2022 : Apache Derby Network Server - 10.15.2.0 - (1873585) started and ready to accept connections on port 1527
+Wed May 04 16:04:33 EDT 2022 : Apache Derby Network Server - 10.15.2.0 - (1873585) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Sat Apr 23 21:01:33 EDT 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-0180-5916-92fd-00001a31d1b3 
+Wed May 04 16:04:33 EDT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-0180-90ac-9e5c-00001a31d1b3 
 on database directory C:\Users\bill4\Documents\Programs\CMPSC221\Derby Database\CourseSchedulerDBBillNeubauerwcn5039 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@73d16e93 
 Loaded from file:/C:/Users/bill4/Documents/Programs/CMPSC221/Derby%20Database/db-derby-10.15.2.0-bin/lib/derby.jar
 java.vendor=Oracle Corporation

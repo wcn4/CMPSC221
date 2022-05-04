@@ -17,8 +17,8 @@ public class ScheduleEntry {
     private final String status;
     private final Timestamp timeStamp;
     
-    public ScheduleEntry(String semeseter, String courseCode, String studentID, String status, Timestamp timeStamp){
-        this.semester = semeseter;
+    public ScheduleEntry(String semester, String courseCode, String studentID, String status, Timestamp timeStamp){
+        this.semester = semester;
         this.courseCode = courseCode;
         this.studentID = studentID;
         this.status = status;

@@ -35,6 +35,6 @@ public class StudentEntry {
     
     @Override
     public String toString(){
-        return String.format("%s,%s", lastName, firstName);
+        return String.format("%s,%s,%s", lastName, firstName, studentID);
     }
 }

@@ -20,13 +20,15 @@ public class StudentQueries {
     private static ResultSet resultSet;
     private static PreparedStatement addStudent;
     private static PreparedStatement getAllStudents;
+    private static PreparedStatement getStudent;
+    private static PreparedStatement dropStudent;
     
     //Adds a student into the database
     public static void addStudent(StudentEntry student){
         connection = DBConnection.getConnection();
         try{
             addStudent = connection.prepareStatement("INSERT INTO APP.STUDENTS"
-                    + "(STUDENTID, FIRSTNAME, LASTNAME) VALUES (?, ?, ?)");
+                    + " (STUDENTID, FIRSTNAME, LASTNAME) VALUES (?, ?, ?)");
             addStudent.setString(1, student.getStudentID());
             addStudent.setString(2, student.getFirstName());
             addStudent.setString(3, student.getLastName());
@@ -55,5 +57,35 @@ public class StudentQueries {
             e.printStackTrace();
         }
         return students;
+    }
+    
+    public static StudentEntry getStudent(String studentID){
+        connection = DBConnection.getConnection();
+        resultSet = null;
+        try{
+            getStudent = connection.prepareStatement("SELECT * FROM APP.STUDENTS"
+                    + " WHERE STUDENTID=?");
+            getStudent.setString(1, studentID);
+            resultSet = getStudent.executeQuery();
+            resultSet.next();
+            return new StudentEntry(resultSet.getString("STUDENTID"), resultSet.getString("FIRSTNAME"), resultSet.getString("LASTNAME"));
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+        return new StudentEntry("Error", "Error", "Error");
+    }
+    
+    public static void dropStudent(String studentID){
+        connection=DBConnection.getConnection();
+        try{
+            dropStudent = connection.prepareStatement("DELETE FROM APP.STUDENTS"
+                    + " WHERE STUDENTID=?");
+            dropStudent.setString(1, studentID);
+            dropStudent.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 }

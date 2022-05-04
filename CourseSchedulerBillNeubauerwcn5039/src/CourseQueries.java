@@ -110,6 +110,20 @@ public class CourseQueries {
         return -1;
     }
     
+    public static void dropCourse(String semester, String courseCode){
+        connection = DBConnection.getConnection();
+        try{
+            dropCourse = connection.prepareStatement("DELETE FROM APP.COURSES"
+                    + " WHERE SEMESTER=? AND COURSECODE=?");
+            dropCourse.setString(1, semester);
+            dropCourse.setString(2, courseCode);
+            dropCourse.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
     
     
     

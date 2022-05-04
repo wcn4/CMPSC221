@@ -965,11 +965,13 @@ public class MainFrame extends javax.swing.JFrame {
         ArrayList<ScheduleEntry> waitlistedStudents = ScheduleQueries.getWaitlistedStudentsByCourse(currentSemester, courseCode);
         String scheduledStudentsMessage = "Last Name\tFirst Name\tStudent ID\n";
         String waitlistedStudentsMessage = "Last Name\tFirst Name\tStudent ID\n";
+        //For every student that has been scheduled, display their lastname, firstname, and student id
         for (ScheduleEntry schedule:scheduledStudents){
             StudentEntry student = StudentQueries.getStudent(schedule.getStudentID());
             scheduledStudentsMessage = String.format("%s%s\t%s\t%s\n", scheduledStudentsMessage,
                     student.getLastName(), student.getFirstName(), student.getStudentID());
         }
+        //For every student that has been waitlisted, display their lastname, firstname, and student id
          for (ScheduleEntry schedule:waitlistedStudents){
             StudentEntry student = StudentQueries.getStudent(schedule.getStudentID());
             waitlistedStudentsMessage = String.format("%s%s\t%s\t%s\n", waitlistedStudentsMessage,
@@ -991,16 +993,20 @@ public class MainFrame extends javax.swing.JFrame {
         String message = "";
         message = String.format("%s has been dropped from the list of students\n", student);
         
+        //Drop the student from the queries
         StudentQueries.dropStudent(student.getStudentID());
         
+        //For every semester that student was enrolled in 
         for (String semester:semesters){
+            //Get every course they were enrolled or waitlisted in
             ArrayList<ScheduleEntry> schedules = ScheduleQueries.getScheduleByStudent(semester, student.getStudentID());
             message = String.format("%s\nFor Semester: %s\n", message, semester);
             
             for (ScheduleEntry schedule:schedules){
-                
+                //Drop the student from the course
                 ScheduleQueries.dropStudentScheduleByCourse(semester, student.getStudentID(), schedule.getCourseCode());
                 
+                //Change label if they were on the waitlist
                 if (schedule.getStatus().equals("W")){
                     message = String.format("%s%s has been dropped from the waitlist for %s\n", message, student, schedule.getCourseCode());
                     
@@ -1034,22 +1040,25 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void dropCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dropCourseButtonActionPerformed
         String courseCode = (String)dropCourseComboBox.getSelectedItem();
+        //Grab the scheduled and waitlisted Entries
         ArrayList<ScheduleEntry> scheduledEntries = ScheduleQueries.getScheduledStudentsByCourse(currentSemester, courseCode);
         ArrayList<ScheduleEntry> waitlistedEntries = ScheduleQueries.getWaitlistedStudentsByCourse(currentSemester, courseCode);
         String message = "Scheduled Students dropped from the course:\n";
-        
+        //Drop the course
         CourseQueries.dropCourse(currentSemester, courseCode);
+        
+        //List out which students will be dropped
         for (ScheduleEntry schedule:scheduledEntries){
             StudentEntry student = StudentQueries.getStudent(schedule.getStudentID());
             message = String.format("%s%s\n", message, student);
         }
         message = String.format("%s\nWaitlisted students dropped from the course:\n", message);
-        
+        //List out which students from the waitlist will be dropped.
         for(ScheduleEntry schedule:waitlistedEntries){
             StudentEntry student = StudentQueries.getStudent(schedule.getStudentID());
             message = String.format("%s%s\n", message, student);
         }
-        
+        //Actually remove the course
         ScheduleQueries.dropScheduleByCourse(currentSemester, courseCode);
         dropCourseTextArea.setText(message);
         rebuildCourseComboBoxes();
